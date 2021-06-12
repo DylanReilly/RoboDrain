@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private int playersInGame;
     private List<int> pickedSpawnIndexTop;
     private List<int> pickedSpawnIndexBot;
-
+    public float energyPool = 1000f;
 
 
 
@@ -87,6 +87,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             print("target not found");
         }
+    }
+
+    public void depletesEnergy(float energyTaken)
+    {
+        this.energyPool -= energyTaken;
     }
 
 //    public PlayerController GetPlayer(int playerId)
