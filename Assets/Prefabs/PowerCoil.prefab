@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 5274194446510564760}
   - component: {fileID: 2209641147482163387}
   - component: {fileID: 5730844287587506600}
+  - component: {fileID: 954812603577960092}
   m_Layer: 0
   m_Name: PowerBankBase01
   m_TagString: Untagged
@@ -162,6 +163,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &954812603577960092
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120161902269669615}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3424514411013961409, guid: 4a6a9cbe98b236e44a8712dc0a898adf, type: 3}
 --- !u!1 &1884475392242092669
 GameObject:
   m_ObjectHideFlags: 0
