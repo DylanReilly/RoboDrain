@@ -5,15 +5,16 @@ using UnityEngine;
 public class SurvivorController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Rigidbody survivorRB;
     public float startEnergy;
     public float currentEnergy;
     private bool onChargingPoint;
     private float currentSpeed;
+    private ChargePoint targetChargingPoint;
+    private float chargingTime = 5;
 
     void Start()
     {
-        currentEnergy = startEnergy;
+        currentEnergy = startEnergy/2;
 
     }
 
@@ -22,7 +23,6 @@ public class SurvivorController : MonoBehaviour
     {
         //print(survivorRB.velocity.magnitude);
         currentSpeed = this.gameObject.GetComponent<FirstPersonMovement>().currentSpeed;
-        print(currentSpeed);
         currentEnergy -= currentSpeed * 0.01f;
 
 
@@ -31,16 +31,28 @@ public class SurvivorController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
-                print("charging");
-                if (this.currentEnergy <= this.startEnergy)
+                if (this.targetChargingPoint.isActive)
                 {
-                    print("currentEnergy: " + currentEnergy);
-                    this.currentEnergy += 0.3f;
-                    if (currentEnergy > startEnergy)
+                    if (this.currentEnergy <= (this.startEnergy - this.targetChargingPoint.energyAvailable))
                     {
-                        currentEnergy = startEnergy;
+                        if (chargingTime > 0)
+                        {
+                            print("charging energy, keep hold E ");
+                            chargingTime -= Time.deltaTime;
+                        }
+                        else
+                        {
+                            print("Charging Success!");
+                            currentEnergy += this.targetChargingPoint.energyAvailable;
+                            this.targetChargingPoint.successCharge = true;
+
+                            if (currentEnergy > startEnergy)
+                            {
+                                currentEnergy = startEnergy;
+                            }
+                        }
                     }
-                }
+                }   
             }
         }
     }
@@ -48,14 +60,17 @@ public class SurvivorController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         print(other.gameObject.tag);
-        if (other.gameObject.tag == "ChargingPoint")
+        if (other.gameObject.tag == "ChargePoint")
         {
+            
             this.onChargingPoint = true;
+            this.targetChargingPoint = other.gameObject.GetComponent<ChargePoint>();
             print("collide");
 
         }
         else
         {
+            this.targetChargingPoint = null;
             this.onChargingPoint = false;
         }
     }

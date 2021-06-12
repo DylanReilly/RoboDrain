@@ -21,8 +21,8 @@ public class ThirdPersonMovement : MonoBehaviour
     void Update()
     {
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         groundedPlayer = controller.isGrounded;
@@ -30,8 +30,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             fallVelocity.y = 0f;
         }
-
-
 
         if (direction.magnitude>=0.1)
         {
@@ -46,6 +44,6 @@ public class ThirdPersonMovement : MonoBehaviour
             moveDirection = Vector3.zero;
         }
         fallVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(((moveDirection.normalized * speed) + fallVelocity )* Time.deltaTime); ;
+        controller.Move(((moveDirection.normalized * speed) + fallVelocity )* Time.deltaTime);
     }
 }
