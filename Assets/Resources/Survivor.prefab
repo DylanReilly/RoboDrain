@@ -12,15 +12,17 @@ GameObject:
   - component: {fileID: 77457500289097747}
   - component: {fileID: 77457500289097744}
   - component: {fileID: 77457500289097745}
+  - component: {fileID: 1940346049607395003}
   - component: {fileID: -3730279655106875041}
   - component: {fileID: 7566004491400906784}
+  - component: {fileID: 7128095794239117692}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Survivor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &77457500289097751
 Transform:
   m_ObjectHideFlags: 0
@@ -54,6 +56,7 @@ MonoBehaviour:
   canRun: 1
   runSpeed: 9
   runningKey: 304
+  currentSpeed: 0
 --- !u!114 &77457500289097744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +85,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &1940346049607395003
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77457500289097748}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0.7
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!114 &-3730279655106875041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +145,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7128095794239117692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77457500289097748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90ce0824140726d41bd69f9a56e3db9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  survivorRB: {fileID: 1940346049607395003}
+  startEnergy: 100
+  currentEnergy: 0
 --- !u!1 &77457500420582630
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +408,10 @@ PrefabInstance:
     - target: {fileID: 4038041543639539294, guid: c62850326ce237e47bbd94b9dc3a96bd, type: 3}
       propertyPath: m_Name
       value: Survivor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4038041543639539294, guid: c62850326ce237e47bbd94b9dc3a96bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c62850326ce237e47bbd94b9dc3a96bd, type: 3}
