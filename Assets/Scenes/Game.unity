@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEnded: 0
-  playerPrefabLocation: Player
+  playerPrefabLocation: Survivor
   spawnPoints:
   - {fileID: 1761323937}
   - {fileID: 1837092708}
