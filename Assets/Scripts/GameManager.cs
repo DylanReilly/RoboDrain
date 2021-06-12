@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool gameEnded = false;  // has the game ended?
 
     [Header("Players")]
-    public string playerPrefabLocation;
+    public string survivorPrefabLocation;
+    public string hunterPrefabLocation;
     public Transform[] spawnPoints;
     //public PlayerController[] players;
     private int playersInGame;
@@ -62,13 +63,15 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SpawnPlayer()
     {
+        string playerPrefab = survivorPrefabLocation;
         int index = 0;
         if (!PhotonNetwork.IsMasterClient)
         {
+            playerPrefab = hunterPrefabLocation;
             index = 1;
         }
 
-        GameObject playerObject = PhotonNetwork.Instantiate(playerPrefabLocation, spawnPoints[index].position, Quaternion.identity);
+        GameObject playerObject = PhotonNetwork.Instantiate(playerPrefab, spawnPoints[index].position, Quaternion.identity);
         //PlayerController playerScript = playerObject.GetComponent<PlayerController>();
         //playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
 

@@ -5,7 +5,6 @@ using UnityEngine;
 public class SurvivorController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Rigidbody survivorRB;
     public float startEnergy;
     public float currentEnergy;
     private bool onChargingPoint;
