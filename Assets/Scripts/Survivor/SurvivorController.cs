@@ -79,7 +79,7 @@ public class SurvivorController : MonoBehaviour
         }
         else if(other.gameObject.tag == "HunterKillRange")
         {
-            other.gameObject.GetComponent<HunterController>().survivor = this;
+            other.gameObject.transform.parent.GetComponent<HunterController>().survivor = this;
             this.killAble = true;
 
         }
@@ -96,7 +96,7 @@ public class SurvivorController : MonoBehaviour
         }
         else if (other.gameObject.tag == "HunterKillRange")
         {
-            other.gameObject.GetComponent<HunterController>().survivor = null;
+            other.gameObject.transform.parent.GetComponent<HunterController>().survivor = null;
             this.killAble = false;
         }
     }

@@ -16,13 +16,15 @@ public class HunterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (survivor.GetComponent<SurvivorController>().killAble)
+        if(survivor != null)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (survivor.GetComponent<SurvivorController>().killAble)
             {
-                survivor.destroy();
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    survivor.destroy();
+                }
             }
         }
-        
     }
 }

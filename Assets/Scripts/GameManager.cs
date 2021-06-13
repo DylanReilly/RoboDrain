@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private List<int> pickedSpawnIndexTop;
     private List<int> pickedSpawnIndexBot;
     public float energyPool = 1000f;
-    public int survivorLives = 3;
+    private int survivorLives = 1;
 
 
 
@@ -66,11 +66,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SpawnPlayer()
     {
-        string playerPrefab = survivorPrefabLocation;
+        string playerPrefab = hunterPrefabLocation;
         int index = 0;
         if (!PhotonNetwork.IsMasterClient)
         {
-            playerPrefab = hunterPrefabLocation;
+            playerPrefab = survivorPrefabLocation;
             index = 1;
         }
 
@@ -118,8 +118,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         switch (winner)
         {
             case Winner.Hunter:
+                print("Hunter Wins!");
                 break;
             case Winner.Survivor:
+                print("Survivor Wins!");
                 break;
         }
 
