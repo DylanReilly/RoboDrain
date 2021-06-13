@@ -5,10 +5,10 @@ public class FirstPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform cam;
-    public float speed = 5;
+    public float walkSpeed = 5f;
+    public float sprintSpeed = 9f;
     public float gravityValue = -9.81f;
     public float turnSmoothTime = 0.1f;
-
 
     [Header("Running")]
     public bool canRun = true;
@@ -17,6 +17,7 @@ public class FirstPersonMovement : MonoBehaviour
     public KeyCode runningKey = KeyCode.LeftShift;
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
     public float currentSpeed;
+    public float jumpStrength = 19.6f;
 
 
 
@@ -27,7 +28,7 @@ public class FirstPersonMovement : MonoBehaviour
     private float targetAngle;
     private float angle;
     private Vector3 moveDirection;
-
+    private float moveSpeed;
 
     void Update()
     {
@@ -53,8 +54,24 @@ public class FirstPersonMovement : MonoBehaviour
             moveDirection = Vector3.zero;
         }
 
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeed = sprintSpeed;
+        }
+        else
+        {
+            moveSpeed = walkSpeed;
+        }
+
+        if(Input.GetKeyDown("space") && groundedPlayer)
+        {
+            fallVelocity.y = jumpStrength;
+        }
+
         fallVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(((moveDirection.normalized * speed) + fallVelocity) * Time.deltaTime);
+        controller.Move(((moveDirection.normalized * moveSpeed) + fallVelocity) * Time.deltaTime);
+        currentSpeed = (moveDirection.normalized * moveSpeed * Time.deltaTime).magnitude;
 
 
         /*
