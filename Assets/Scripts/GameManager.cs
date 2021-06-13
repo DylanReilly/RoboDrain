@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Transform[] spawnPoints;
     public float energyPool = 500f;
     public TextMeshProUGUI energyLeft;
+    public TextMeshProUGUI survivorLiveLeft;
+    public TextMeshProUGUI winScreen;
     //public PlayerController[] players;
     private int playersInGame;
     private List<int> pickedSpawnIndexTop;
@@ -54,7 +56,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         //pingUI.text = "Cloud Region: " + PhotonNetwork.CloudRegion +
         //            "\n Ping: " + PhotonNetwork.GetPing().ToString() + "ms";
 
-        energyLeft.text = energyPool.ToString();
+        energyLeft.text = "Hunter Energy Left: " + energyPool.ToString();
+        survivorLiveLeft.text = "Survivor Live: " + survivorLives.ToString();
     }
 
 
@@ -127,14 +130,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         switch (winner)
         {
             case Winner.Hunter:
+                winScreen.text = "Hunter Wins!!";
                 print("Hunter Wins!");
+                
                 break;
             case Winner.Survivor:
+                winScreen.text = "Survivor Wins!!";
                 print("Survivor Wins!");
                 break;
         }
 
         this.gameEnded = true;
+        Application.Quit();
     }
 
 //    public PlayerController GetPlayer(int playerId)
