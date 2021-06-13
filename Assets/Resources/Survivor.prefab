@@ -183,6 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startEnergy: 100
   currentEnergy: 0
+  killAble: 0
 --- !u!1 &77457500420582630
 GameObject:
   m_ObjectHideFlags: 0

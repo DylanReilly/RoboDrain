@@ -66,15 +66,16 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SpawnPlayer()
     {
-        string playerPrefab = hunterPrefabLocation;
+        string playerPrefab = survivorPrefabLocation;
         int index = 0;
         if (!PhotonNetwork.IsMasterClient)
         {
-            playerPrefab = survivorPrefabLocation;
+            playerPrefab = hunterPrefabLocation;
             index = 1;
         }
 
         GameObject playerObject = PhotonNetwork.Instantiate(playerPrefab, spawnPoints[index].position, Quaternion.identity);
+        
         //PlayerController playerScript = playerObject.GetComponent<PlayerController>();
         //playerScript.photonView.RPC("Initialize", RpcTarget.All, PhotonNetwork.LocalPlayer);
 
