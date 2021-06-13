@@ -7,6 +7,8 @@ public class SurvivorController : MonoBehaviour
     // Start is called before the first frame update
     public float startEnergy;
     public float currentEnergy;
+    public bool killAble;
+
     private bool onChargingPoint;
     private float currentSpeed;
     private ChargePoint targetChargingPoint;
@@ -15,7 +17,7 @@ public class SurvivorController : MonoBehaviour
     void Start()
     {
         currentEnergy = startEnergy/2;
-
+        killAble = false;
     }
 
     // Update is called once per frame
@@ -57,21 +59,45 @@ public class SurvivorController : MonoBehaviour
         }
     }
 
+    public void destroy()
+    {
+        //run blow up animation
+        this.gameObject.SetActive(false);
+        GameManager.instance.onSurvivorDestroyed();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         print(other.gameObject.tag);
         if (other.gameObject.tag == "ChargePoint")
         {
-            
+            //if enter trigger volume for charge point
             this.onChargingPoint = true;
             this.targetChargingPoint = other.gameObject.GetComponent<ChargePoint>();
-            print("collide");
+            print("collide with charge point");
 
         }
-        else
+        else if(other.gameObject.tag == "HunterKillRange")
         {
+            other.gameObject.transform.parent.GetComponent<HunterController>().survivor = this;
+            this.killAble = true;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "ChargePoint")
+        {
+
             this.targetChargingPoint = null;
             this.onChargingPoint = false;
+
+        }
+        else if (other.gameObject.tag == "HunterKillRange")
+        {
+            other.gameObject.transform.parent.GetComponent<HunterController>().survivor = null;
+            this.killAble = false;
         }
     }
 

@@ -6,6 +6,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 
+public enum Winner { Survivor, Hunter}
+
 public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("Stats")]
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private List<int> pickedSpawnIndexTop;
     private List<int> pickedSpawnIndexBot;
     public float energyPool = 1000f;
+    private int survivorLives = 1;
 
 
 
@@ -63,11 +66,11 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     void SpawnPlayer()
     {
-        string playerPrefab = survivorPrefabLocation;
+        string playerPrefab = hunterPrefabLocation;
         int index = 0;
         if (!PhotonNetwork.IsMasterClient)
         {
-            playerPrefab = hunterPrefabLocation;
+            playerPrefab = survivorPrefabLocation;
             index = 1;
         }
 
@@ -95,6 +98,34 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void depletesEnergy(float energyTaken)
     {
         this.energyPool -= energyTaken;
+        if(this.energyPool <= 0)
+        {
+            gameOver(Winner.Survivor);
+        }
+    }
+
+    public void onSurvivorDestroyed()
+    {
+        survivorLives--;
+        if(survivorLives == 0)
+        {
+            gameOver(Winner.Hunter);
+        }
+    }
+
+    public void gameOver(Winner winner)
+    {
+        switch (winner)
+        {
+            case Winner.Hunter:
+                print("Hunter Wins!");
+                break;
+            case Winner.Survivor:
+                print("Survivor Wins!");
+                break;
+        }
+
+        this.gameEnded = true;
     }
 
 //    public PlayerController GetPlayer(int playerId)
