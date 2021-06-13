@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
+using TMPro;
 
 public enum Winner { Survivor, Hunter}
 
@@ -17,11 +18,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public string survivorPrefabLocation;
     public string hunterPrefabLocation;
     public Transform[] spawnPoints;
+    public float energyPool = 500f;
+    public TextMeshProUGUI energyLeft;
     //public PlayerController[] players;
     private int playersInGame;
     private List<int> pickedSpawnIndexTop;
     private List<int> pickedSpawnIndexBot;
-    public float energyPool = 1000f;
+    
     private int survivorLives = 1;
 
 
@@ -50,6 +53,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         //pingUI.text = "Cloud Region: " + PhotonNetwork.CloudRegion +
         //            "\n Ping: " + PhotonNetwork.GetPing().ToString() + "ms";
+
+        energyLeft.text = energyPool.ToString();
     }
 
 
@@ -96,24 +101,27 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     public void depletesEnergy(float energyTaken)
     {
         this.energyPool -= energyTaken;
         if(this.energyPool <= 0)
         {
-            gameOver(Winner.Survivor);
+            photonView.RPC("gameOver", RpcTarget.All,Winner.Survivor);
         }
     }
 
+    [PunRPC]
     public void onSurvivorDestroyed()
     {
         survivorLives--;
         if(survivorLives == 0)
         {
-            gameOver(Winner.Hunter);
+            photonView.RPC("gameOver", RpcTarget.All, Winner.Hunter);
         }
     }
 
+    [PunRPC]
     public void gameOver(Winner winner)
     {
         switch (winner)

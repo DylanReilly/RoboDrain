@@ -6692,6 +6692,27 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e44065d879005ff40b87213f18d93186, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6533333cd6d0984bb2db82f21e640b3, type: 3}
+--- !u!1 &670069470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -632081167643248715, guid: e6533333cd6d0984bb2db82f21e640b3, type: 3}
+  m_PrefabInstance: {fileID: 670069469}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &670069471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670069470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18867f6960bc894f9f78a2fcbb945b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chargePoints: []
+  maxCharge: 500
+  currentCharge: 500
+  baseRotationSpeed: 2
 --- !u!1001 &673888705
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,13 +1,17 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
-public class SurvivorController : MonoBehaviour
+public class SurvivorController : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
     public float startEnergy;
     public float currentEnergy;
     public bool killAble;
+    public GameObject camera;
+    public FirstPersonMovement moveController;
 
     private bool onChargingPoint;
     private float currentSpeed;
@@ -16,6 +20,12 @@ public class SurvivorController : MonoBehaviour
 
     void Start()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            camera.GetComponent<CinemachineVirtualCamera>().Priority = 11;
+            camera.SetActive(false);
+            moveController.enabled = false;
+        }
         currentEnergy = startEnergy/2;
         killAble = false;
     }
@@ -25,7 +35,7 @@ public class SurvivorController : MonoBehaviour
     {
         //print(survivorRB.velocity.magnitude);
         currentSpeed = this.gameObject.GetComponent<FirstPersonMovement>().currentSpeed;
-        currentEnergy -= currentSpeed * 0.01f;
+        currentEnergy -= currentSpeed * 0.1f;
 
 
 
@@ -47,6 +57,7 @@ public class SurvivorController : MonoBehaviour
                             print("Charging Success!");
                             currentEnergy += this.targetChargingPoint.energyAvailable;
                             this.targetChargingPoint.successCharge = true;
+                            chargingTime = 5;
 
                             if (currentEnergy > startEnergy)
                             {
@@ -59,11 +70,12 @@ public class SurvivorController : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void destroy()
     {
         //run blow up animation
         this.gameObject.SetActive(false);
-        GameManager.instance.onSurvivorDestroyed();
+        GameManager.instance.photonView.RPC("onSurvivorDestroyed", RpcTarget.All);
     }
 
     private void OnTriggerEnter(Collider other)

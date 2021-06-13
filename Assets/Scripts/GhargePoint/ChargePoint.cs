@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ChargePoint : MonoBehaviour
+public class ChargePoint : MonoBehaviourPunCallbacks
 {
 
     public bool isActive;
@@ -21,9 +22,10 @@ public class ChargePoint : MonoBehaviour
     void Update()
     {
 
-        if (successCharge && isActive)
+        if (successCharge && isActive) 
         {
-            GameManager.instance.depletesEnergy(energyAvailable);
+            object[] param = { energyAvailable };
+            GameManager.instance.photonView.RPC("depletesEnergy", RpcTarget.All, param);
             isActive = false;
         }
     }
